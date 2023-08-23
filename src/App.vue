@@ -57,13 +57,13 @@ export default {
     <v-responsive style="min-width: 500px;">
       <v-container class="fill-height">
         <v-row class="fill-height">
-          <v-col cols="3" >
+          <v-col cols="3" md="4" sm="12">
             <v-sheet class="d-flex flex-column fill-height elevation-2 border-1 rounded">
               <SearchLocation @update-event="updatePosition"></SearchLocation>
               <List @remove-marker="removePosition" class="fill-height" :markersPosition="markersPosition"></List>
             </v-sheet>
           </v-col>
-          <v-col>
+          <v-col md="8" sm="12">
             <Map :userCoordinate="userPosition" :markersPosition="markersPosition"></Map>
           </v-col>
         </v-row>

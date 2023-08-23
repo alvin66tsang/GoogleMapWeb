@@ -26,7 +26,7 @@
             </v-list-item-action>
         </template>
 
-        <v-list-item-title>{{ props.record.name }}</v-list-item-title>
+        <v-list-item-title class="text-wrap">{{ props.record.name }}</v-list-item-title>
         <v-list-item-subtitle>
             Latitude: {{ props.record.geometry.lat.toFixed(3) }}, Longitude: {{ props.record.geometry.lng.toFixed(3) }} 
             <v-spacer></v-spacer>

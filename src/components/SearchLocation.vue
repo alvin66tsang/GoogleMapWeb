@@ -99,6 +99,7 @@ export default {
     placeholder="Search any location"
     append-inner-icon="mdi-magnify"
     v-model="searchVal"
+    aria-label="search"
     @click:append-inner="searchPlace"
   ></v-text-field>
   <v-container v-if="responseMsg">
