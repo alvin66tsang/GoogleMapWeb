@@ -4,8 +4,10 @@ import { ref, reactive, onMounted } from "vue";
 import axios from "axios";
 import { Loader } from "@googlemaps/js-api-loader";
 import * as config from "../../config.json";
+import Alert from "./Alert.vue";
 
 export default {
+  components: { Alert },
   emits: ["update-event"],
   setup(props, { emit }) {
     const searchVal = ref("");
@@ -103,7 +105,7 @@ export default {
     @click:append-inner="searchPlace"
   ></v-text-field>
   <v-container v-if="responseMsg">
-    <v-alert closable variant="tonal" type="error" :text="responseMsg"></v-alert>
+    <Alert :responseMsg="responseMsg"></Alert>
   </v-container>
     <!-- <h4 v-if="responseMsg" class="msg ml-4 text-red-lighten-1 text-center">
       {{ responseMsg }}
