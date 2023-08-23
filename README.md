@@ -17,5 +17,3 @@ npm run dev
 ```sh
 npm run build
 ```
-
->>>>>>> ab9a255 (first commit)
