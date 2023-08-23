@@ -8,6 +8,12 @@ A single web page that included a search module for searching a location, a map 
 npm install
 ```
 
+## PASTE API KEY
+
+```sh
+replace the google API key in config.json file
+```
+
 ### Compile and Hot-Reload for Development
 
 ```sh
