@@ -60,7 +60,7 @@ export default {
           <v-col cols="3" >
             <v-sheet class="d-flex flex-column fill-height elevation-2 border-1 rounded">
               <SearchLocation @update-event="updatePosition"></SearchLocation>
-              <List @remove-marker="removePosition" class="fill-height" :searchedItems="markersPosition"></List>
+              <List @remove-marker="removePosition" class="fill-height" :markersPosition="markersPosition"></List>
             </v-sheet>
           </v-col>
           <v-col>

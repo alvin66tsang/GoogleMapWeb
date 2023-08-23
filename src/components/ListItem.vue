@@ -1,7 +1,7 @@
 <script>
     export default {
         name: 'listItem',
-        props: ['searchedItem', 'selectedItems', 'key'],
+        props: ['record', 'selectedItems', 'key'],
         emits: ['selected-item'],
         setup(props, { emit }) {
 
@@ -22,17 +22,17 @@
     <v-list-item>
         <template v-slot:prepend="{ isActive }">
             <v-list-item-action>
-            <v-checkbox-btn v-model="props.searchedItem.checked"  @change="updateSelected(props.searchedItem)"></v-checkbox-btn>
+            <v-checkbox-btn v-model="props.record.checked"  @change="updateSelected(props.record)"></v-checkbox-btn>
             </v-list-item-action>
         </template>
 
-        <v-list-item-title>{{ props.searchedItem.name }}</v-list-item-title>
+        <v-list-item-title>{{ props.record.name }}</v-list-item-title>
         <v-list-item-subtitle>
-            Latitude: {{ props.searchedItem.geometry.lat.toFixed(3) }}, Longitude: {{ props.searchedItem.geometry.lng.toFixed(3) }} 
+            Latitude: {{ props.record.geometry.lat.toFixed(3) }}, Longitude: {{ props.record.geometry.lng.toFixed(3) }} 
             <v-spacer></v-spacer>
-            <small>Time Zone: {{ props.searchedItem.timeZone }}</small>
+            <small>Time Zone: {{ props.record.timeZone }}</small>
             <v-spacer></v-spacer>
-            <small>Local Time: {{ props.searchedItem.localTime }}</small>
+            <small>Local Time: {{ props.record.localTime }}</small>
         </v-list-item-subtitle>
     </v-list-item>
 </template>

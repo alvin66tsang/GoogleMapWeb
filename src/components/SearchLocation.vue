@@ -49,39 +49,43 @@ export default {
           // Reset
           responseMsg.value = "";
           searchVal.value = "";
+          locationData.value = {}
+          autoCompleteInput.set('place', void(0))
         } else {
-          responseMsg.value = "Location not found. Please search again.";
+          responseMsg.value = "Location name not found.";
           searchVal.value = "";
+          autoCompleteInput.set('place', void(0))
         }
       } catch (error) {
         console.error(error);
       }
     };
 
-    const checkInputType = () => {
-      const place = autoCompleteInput.getPlace();
-      if (place) {
-        if (place.formatted_address)
-          fetchFromGoogleMapApi({ name: place.formatted_address });
-        else fetchFromGoogleMapApi(place);
-      } else {
-        fetchFromGoogleMapApi({ name: searchVal.value });
+    const searchPlace = (place) => {
+
+      if(searchVal.value.length == 0) return
+
+      if(place && place.formatted_address) {
+        searchVal.value = place.formatted_address
       }
-      document.getElementById("mapAutoComplete").value = "";
+        fetchFromGoogleMapApi({ name: searchVal.value });
     };
 
     onMounted(async () => {
       const { Autocomplete } = await loader.importLibrary("places");
       autoCompleteInput = new Autocomplete(document.getElementById("mapAutoComplete"));
       autoCompleteInput.addListener("place_changed", () => {
-        checkInputType();
+        const place = autoCompleteInput.getPlace();
+        if(place && place.name.length > 0) {
+          searchPlace(place)
+        }
       });
     });
 
     return {
       responseMsg,
       searchVal,
-      checkInputType,
+      searchPlace,
     };
   },
 };
@@ -95,13 +99,14 @@ export default {
     placeholder="Search any location"
     append-inner-icon="mdi-magnify"
     v-model="searchVal"
-    @click:append-inner="checkInputType"
+    @click:append-inner="searchPlace"
   ></v-text-field>
-  <v-expand-transition>
-    <h4 v-if="responseMsg" class="msg ml-4 text-red-lighten-1 text-center">
+  <v-container v-if="responseMsg">
+    <v-alert closable variant="tonal" type="error" :text="responseMsg"></v-alert>
+  </v-container>
+    <!-- <h4 v-if="responseMsg" class="msg ml-4 text-red-lighten-1 text-center">
       {{ responseMsg }}
-    </h4>
-  </v-expand-transition>
+    </h4> -->
 </template>
 
 <style></style>

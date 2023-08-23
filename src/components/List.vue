@@ -5,14 +5,14 @@
     export default {
     name: 'list',
     components: { ListItem },
-    props: ['searchedItems'],
+    props: ['markersPosition'],
     emits: ['remove-marker'],
     setup(props, { emit }) {
         const itemsPerPage = 10
         const currentPage = ref(1)
 
         const state = reactive({
-            items: props.searchedItems,
+            items: props.markersPosition,
             searchedRecords: [],
             selectedItems: []
         })
@@ -46,7 +46,7 @@
         state.searchedRecords = computed(() => {
             const startIdx = (currentPage.value - 1) * (itemsPerPage)
             const endIdx = startIdx + itemsPerPage
-            return state.items.slice(startIdx, endIdx)
+            return state.items.slice(startIdx, endIdx).reverse()
         })
 
         return { currentPage, itemsPerPage, state, totalPage, onPageChanged, updateSelectedItems, delSelectedItems }
@@ -59,7 +59,7 @@
 
         <v-list lines="three" rouned="xl" class="pa-0 overflow-y-auto w-100 flex-grow-1" style="max-height: 75vh;">
             <v-list-item v-for="record in state.searchedRecords">
-                <ListItem @selected-item="updateSelectedItems" :searchedItem="record" :selectedItem="state.selectedItems"></ListItem>
+                <ListItem @selected-item="updateSelectedItems" :record="record" :selectedItem="state.selectedItems"></ListItem>
             </v-list-item>
         </v-list>
         <v-pagination :total-visible="7" :length="totalPage" v-model="currentPage" @input="onPageChanged"></v-pagination>
