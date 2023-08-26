@@ -1,17 +1,11 @@
 <script>
     export default {
         name: 'listItem',
-        props: ['record', 'selectedItems', 'key'],
-        emits: ['selected-item'],
-        setup(props, { emit }) {
-
-            const updateSelected = (item) => {
-                emit('selected-item', item)
-            }
+        props: ['record'],
+        setup(props) {
 
             return {
                 props,
-                updateSelected
             }
 
         }
@@ -22,7 +16,7 @@
     <v-list-item>
         <template v-slot:prepend="{ isActive }">
             <v-list-item-action>
-            <v-checkbox-btn v-model="props.record.checked"  @change="updateSelected(props.record)"></v-checkbox-btn>
+            <v-checkbox-btn v-model="props.record.checked" ></v-checkbox-btn>
             </v-list-item-action>
         </template>
 

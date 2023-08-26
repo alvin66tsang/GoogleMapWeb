@@ -25,21 +25,9 @@
             currentPage.value = page
         }
 
-        const updateSelectedItems = (item) => {
-            if(!item.checked) {
-                state.selectedItems.splice(state.selectedItems.indexOf(item), 1)
-            }
-            state.selectedItems.push(item)
-        }
-
         const delSelectedItems = () => {
-            const checkedItems = state.selectedItems.filter((item) => item.checked)
+            const checkedItems = state.items.filter((item) => item.checked)
             emit('remove-marker', checkedItems)
-            // state.selectedItems.forEach((item) => {
-            //     if (item.checked) {
-            //         emit('remove-marker', item)
-            //     }
-            // })
             state.selectedItems = []
         }
         
@@ -49,7 +37,7 @@
             return state.items.slice(startIdx, endIdx).reverse()
         })
 
-        return { currentPage, itemsPerPage, state, totalPage, onPageChanged, updateSelectedItems, delSelectedItems }
+        return { currentPage, itemsPerPage, state, totalPage, onPageChanged, delSelectedItems }
     }
 }
 </script>
@@ -59,7 +47,7 @@
 
         <v-list lines="three" rouned="xl" class="pa-0 overflow-y-auto w-100 flex-grow-1" style="max-height: 75vh;">
             <v-list-item v-for="record in state.searchedRecords">
-                <ListItem @selected-item="updateSelectedItems" :record="record" :selectedItem="state.selectedItems"></ListItem>
+                <ListItem :record="record"></ListItem>
             </v-list-item>
         </v-list>
         <v-pagination :total-visible="7" :length="totalPage" v-model="currentPage" @input="onPageChanged"></v-pagination>
