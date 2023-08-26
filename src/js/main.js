@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 import App from '../App.vue'
+import * as config from "../../config.json";
+import { Loader } from "@googlemaps/js-api-loader";
 
 // Vuetify
 import 'vuetify/styles'
@@ -22,4 +24,5 @@ const vuetify = createVuetify({
   },
 })
 
-createApp(App).use(vuetify).mount('#app')
+const app = createApp(App)
+app.use(vuetify).mount('#app')

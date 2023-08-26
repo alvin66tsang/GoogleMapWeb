@@ -19,11 +19,14 @@ export default {
     });
 
     const fetechFromGoogleTimeZoneApi = async (location) => {
-      const currentTimestamp =
-        Math.round(new Date() / 1000) + new Date().getTimezoneOffset() * 60;
-      const { data } = await axios.get(
-        `https://maps.googleapis.com/maps/api/timezone/json?location=${location.geometry.lat}, ${location.geometry.lng}&timestamp=${currentTimestamp}&key=${config.GOOGLE_MAP_API_KEY}`
-      );
+      const currentTimestamp = Math.round(new Date() / 1000) + new Date().getTimezoneOffset() * 60;
+      const { data } = await axios.get(config.GOOGLE_API + 'timezone/json?', { 
+        params: {
+          location: `${location.geometry.lat}, ${location.geometry.lng}`,
+          timestamp: currentTimestamp,
+          key: config.GOOGLE_MAP_API_KEY
+        } 
+      })
       const timeZone = data.timeZoneName;
       const localTime = new Date(
         (currentTimestamp + data.rawOffset) * 1000
@@ -34,9 +37,13 @@ export default {
 
     const fetchFromGoogleMapApi = async ({ name }) => {
       try {
-        const { data } = await axios.get(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${name}&key=${config.GOOGLE_MAP_API_KEY}&language=en`
-        );
+        const { data } = await axios.get(config.GOOGLE_API + `geocode/json`, {
+          params: {
+            address: name,
+            key: config.GOOGLE_MAP_API_KEY,
+            language: 'en'
+          }
+        })
         const result = data.results;
         if (result.length > 0) {
           const { location } = result[0].geometry;
