@@ -28,9 +28,8 @@ export default {
         } 
       })
       const timeZone = data.timeZoneName;
-      const localTime = new Date(
-        (currentTimestamp + data.rawOffset) * 1000
-      ).toLocaleTimeString();
+      console.log(data)
+      const localTime = new Date(currentTimestamp * 1000 + (data.rawOffset * 1000 + data.dstOffset * 1000)).toLocaleTimeString();
 
       return { timeZone, localTime };
     };
