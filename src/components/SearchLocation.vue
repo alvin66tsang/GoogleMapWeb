@@ -19,7 +19,9 @@ export default {
     });
 
     const fetechFromGoogleTimeZoneApi = async (location) => {
-      const currentTimestamp = Math.round(new Date() / 1000) + new Date().getTimezoneOffset() * 60;
+      const date = new Date()
+      const currentTimestamp = Math.round(new Date().getTime() / 1000);
+
       const { data } = await axios.get(config.GOOGLE_API + 'timezone/json?', { 
         params: {
           location: `${location.geometry.lat}, ${location.geometry.lng}`,
@@ -27,9 +29,10 @@ export default {
           key: config.GOOGLE_MAP_API_KEY
         } 
       })
-      const timeZone = data.timeZoneName;
-      console.log(data)
-      const localTime = new Date(currentTimestamp * 1000 + (data.rawOffset * 1000 + data.dstOffset * 1000)).toLocaleTimeString();
+      const timeZone = data.timeZoneName
+      const timeZoneId = data.timeZoneId
+
+      const localTime = date.toLocaleTimeString('en-us', timeZoneId)
 
       return { timeZone, localTime };
     };
